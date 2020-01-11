@@ -1,0 +1,65 @@
+<div *ngIf="!notesList">
+  It's lonely here, add some notes
+  <p><a routerLink="/">Home</a></p>
+</div>
+
+<div class="input-group">
+  <input class="form-control" type="text" placeholder="Search notes..." aria-label="Search notes..." aria-describedby="my-addon" #searchQuery>
+  <div class="input-group-append">
+    <span class="btn btn-secondary" id="my-addon" (click)="searchNotes(searchQuery.value)">Search</span>
+  </div>
+</div>
+
+<h3 *ngIf="resultsFound">search results</h3>
+<table *ngIf="resultsFound" class = "table table-bordered col-md-12">
+  <thead>
+    <th scope="col">Title</th>
+    <th scope="col">Description</th>
+    <th scope="col">Operations</th>
+  </thead>
+  <tbody>
+    <tr *ngIf="editing">
+      <td><input type="text" placeholder="Enter new title..." [(ngModel)]="NoteData.title" #newTitle></td>
+      <td><textarea placeholder="Enter new description" [(ngModel)]="NoteData.description" #newDescription></textarea></td>
+      <td><p><button (click) = "editNote(NoteData._id)">Update note</button></td>
+    </tr>
+    <tr *ngFor="let note of resultNotesList">
+      <td *ngIf="!editing"><strong>{{note.title}}</strong></td>
+      <td *ngIf="!editing">{{note.description}}</td>
+      <td *ngIf="!editing">
+        <button *ngIf="!editing" (click)="editNoteToggler(note._id); NoteData.title = note.title; NoteData.description = note.description; NoteData._id = note._id">
+          <i class="fas fa-pencil-alt"></i></button>
+        <span><button (click)="deleteNote(note._id)">
+              <i class="fas fa-trash-alt"></i></button></span>
+      </td>
+    </tr>
+   </tbody>
+</table>
+
+<h3 *ngIf="notesList">All notes...</h3>
+<table *ngIf = "notesList" class="table table-bordered col-md-12">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Operations</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="editing">
+          <td><input type="text" placeholder="Enter new title..." [(ngModel)]="NoteData.title" #newTitle></td>
+          <td><textarea placeholder="Enter new description" [(ngModel)]="NoteData.description" #newDescription></textarea></td>
+          <td><p><button (click) = "editNote(NoteData._id)">Update note</button></td>
+      </tr>
+      <tr *ngFor="let note of notesList">
+        <td *ngIf="!editing"><strong>{{note.title}}</strong></td>
+        <td *ngIf="!editing">{{note.description}}</td>
+        <td *ngIf="!editing">
+          <button *ngIf="!editing" (click)="editNoteToggler(note._id); NoteData.title = note.title; NoteData.description = note.description; NoteData._id = note._id">
+            <i class="fas fa-pencil-alt"></i></button>
+          <span><button (click)="deleteNote(note._id)">
+              <i class="fas fa-trash-alt"></i></button></span>
+          </td>
+      </tr>
+    </tbody>
+  </table>

@@ -1,0 +1,18 @@
+<h2>New note generation</h2>
+<form>
+    <div class="input-group mb-3 margin">
+        <input type="text" class="form-control" placeholder="Enter title" aria-label="Recipient's username" aria-describedby="button-addon2" #title>
+      <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Note Description </span>
+          </div>
+          <textarea class="form-control" aria-label="With textarea" #description></textarea>
+        </div>
+        <button class="btn btn-outline-secondary" (click) = "generateNote(title.value, description.value); title.value = null; description.value = null;" type="button" id="button-addon2">Add</button>
+    </div>
+    <div *ngIf="message">
+      Note successfully added
+    </div>
+</form>
+    
+  
